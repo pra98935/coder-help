@@ -1,0 +1,112 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+        <a href="https://single-spa.js.org/docs/ecosystem-angular/" target="_blank">Doc</a>
+        <br/>
+        <a href="https://www.youtube.com/watch?v=p4o1gxNl5ms&list=PLJjz2el2bUZwQ77nMAVpqfdxygAmG1nPi&index=1" target="_blank">MFE Video</a>
+
+        <h5>Setup for container</h5>
+        <code>
+            command => create-single-spa
+            <br/>
+            <br/>
+            choose => <b>single-spa root config</b>
+            <br/>
+            choose => nvm
+            <br/>
+            choose => typescript?
+            <br/>
+            choose => engine
+            <br/>
+            choose => organization
+        </code>
+
+        <br/>
+        <br/>
+       
+        <b>file name:- index.ejs</b>
+        <textarea style="width:100%; height:300px">
+            <script src="https://unpkg.com/zone.js"></script>
+            
+            <% if (isLocal) { %>
+                <script type="systemjs-importmap">
+                    {
+                    "imports": {
+                        "@angular-app/angular-project": "http://localhost:4200/main.js"
+                    }
+                    }
+                </script>
+            <% } %>
+        </textarea>
+        <br/>
+        <br/>            
+        <b>file name:- microfrontend-layout.html</b>           
+        <textarea style="width:100%; height:300px;"> 
+            
+            <main>
+                <route path="static">
+                <application name="@single-spa/welcome"></application>
+                </route>
+                <route default>
+                <application name="@angular-app/angular-project"></application>
+                </route>
+            </main>
+        </textarea>
+        <br/>            
+        <b>command:- npm start</b>
+    <!-- ======================= -->
+        <br/>
+        <br/>
+        <h5>Sub App</h5>
+        <code>
+            Create normal project
+            <br/>
+            command => ng add single-spa-angular
+        </code>
+        <br/>
+        <br/>
+        <code>
+
+        Note: EmptyRouteComponent  component will create by default
+        <br/>
+        <br/>
+        file name:- app-routing.module.ts
+        <br/>
+        const routes: Routes = [
+        <br/>
+        {
+            <br/>
+            &nbsp;path:'',
+            <br/>
+            &nbsp;component:EmptyRouteComponent
+            <br/>
+        }
+        <br/>
+        ];
+        <br/>
+        <br/>
+
+        @NgModule({
+            <br/>
+            &nbsp;imports: [RouterModule.forRoot(routes)],
+            <br/>
+            &nbsp;exports: [RouterModule],
+            <br/>
+            &nbsp;providers:[{provide: APP_BASE_HREF, useValue:'/'}]
+            <br/>
+        })
+        </code>
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

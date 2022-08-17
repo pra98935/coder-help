@@ -1,0 +1,342 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+    <div class="col-md-9">
+        <h5>Promise VS Observable</h5>
+
+        <h6>What is Promise</h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+            A promise is a JavaScript object that may produce a value at some point in time. 
+            
+            A promise may be in one of 4 possible states: fulfilled, rejected, pending or settled.
+
+            Promises simplify deferred and asynchronous computations.
+
+            A promise can be:
+            fulfilled - The action relating to the promise succeeded
+            rejected - The action relating to the promise failed
+            pending - Hasn't fulfilled or rejected yet
+            settled - Has fulfilled or rejected
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+
+        <h6> Promise Syntax </h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+        var promise = new Promise((resolve, reject) => { 
+            resolve("Promise Resolved"); 
+        }) 
+
+        promise.then((success) => { 
+            console.log(success); 
+        }) 
+        .catch(function(error) => { 
+            console.log(error); 
+        }); 
+
+        RESOLVE:- SUCCESS (RESULT VALUE)
+        REJECT:- ERROR (ERROR OBJECT)
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <br/>
+        <br/>
+        <h6> Promise All </h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+        p1 = Promise.resolve(50);
+        p2 = 200
+        p3 = new Promise(function(resolve, reject) {
+            setTimeout(resolve, 100, 'geek');
+        });
+    
+        Promise.all([p1, p2, p3]).then(function(values) {
+            document.write(values);
+        });
+        </textarea>
+     <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+
+        <h5>How to Use Promise in Angular</h5>
+        <h6>Service</h6>
+        <textarea style="width: 100%; height: 200px;" readonly>
+            fetchDataAsPromise() {
+                return this.httpClient
+                .get(
+                    `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${this.API_KEY}`
+                )
+                .toPromise();
+            }
+        </textarea>
+
+        <h6>Component</h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+            constructor(private us: userService)
+
+            this.us.fetchDataAsPromise()
+            .then((data) => {
+                console.log(JSON.stringify(data));
+            })
+            .catch((error) => {
+                console.log("Promise rejected with " + JSON.stringify(error));
+            });
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+        <h6>Observable</h6>
+        <b>Observers:-</b> It is an object that defines callback methods to handle the three types of notifications (next, error, complete) that an observable can send.
+        <br/>
+        <b>Observable:-</b> It is basically used to <i style="color:red">publish value only</i> when someone subscribes to it.
+        <br/>
+        <textarea style="width: 100%; height: 400px;" readonly>
+            // Create simple observable that emits three values
+            const myObservable = of(1, 2, 3);
+
+            // Create observer object
+            const myObserver = {
+            next: (x: number) => console.log('Observer got a next value: ' + x),
+            error: (err: Error) => console.error('Observer got an error: ' + err),
+            complete: () => console.log('Observer got a complete notification'),
+            };
+
+            // Execute with the observer object
+            myObservable.subscribe(myObserver);
+
+            // Logs:
+            // Observer got a next value: 1
+            // Observer got a next value: 2
+            // Observer got a next value: 3
+            // Observer got a complete notification
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+        <h6>Difference B/W Promise and Observable</h6>
+        <table>
+            <thead>
+                <tr>
+                    <th>Promise</th>
+                    <th>Observable</th>
+                </tr>    
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Eager Loaded</b>
+                        <br/>
+                        var promise = new Promise((resolve, reject) => { <br/>
+                            console.log('call')<br/>
+                            resolve("Promise Resolved");<br/> 
+                        }) 
+                        <br/>
+                        it will print console data no need to call  
+                    </td>
+                    <td>
+                        <b>Lazy Loaded</b>
+                        <br/>
+                        var obs = new Observable((observer) => { <br/>
+                            console.log('call')<br/>
+                        }) 
+                        <br/>
+                        it will not print console data. we need to subscribe 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>No Retry Method</b>
+                        <br/>
+                        fetchDataAsPromise() {<br/>
+                            return this.httpClient<br/>
+                            .get(<br/>
+                                `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${this.API_KEY}`<br/>
+                            )<br/>
+                            .toPromise();<br/>
+                        }
+                        <br/>
+                        If call is failed there is no opton to retry one more time  
+                    </td>
+                    <td>
+                        <b>Retry Method</b>
+                        <br/>
+                        getManagerViewReport(object): Observable<ModelName> {<br/>
+                            return this._http.post<ModelName>(URL, object).pipe(<br/>
+                            map(data => {<br/>
+                                return data;<br/>
+                            }),<br/>
+                            <strong>retry(1),</strong><br/>
+                            catchError(this.handleError.bind(this))<br/>
+                            );
+                        }   
+                        <br/>
+                        If call is failed there is method retry so we can try few more time. 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Can't emit multiple value</b>
+                        <br/>
+                        var promise = new Promise((resolve, reject) => { <br/>
+                            resolve("Promise Resolved");<br/>
+                            resolve("Promise Resolved 1"); <br/>
+                        }) 
+                        <br/>
+                        it will console only 1st resolve exa. "Promise Resolved". it will not move to next resolve.  
+                    </td>
+                    <td>
+                        <b>Can emit multiple value</b>
+                        <br/>
+                        var obs = new Observable((observer) => { <br/>
+                            observer.next('1');<br/>
+                            observer.next('2');<br/>
+                        }) 
+                        <br/>
+                        it will console both value 1 and 2; 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>No Cancell</b>
+                        <br/>
+                        the inherit JavaScript Promise is not cancellable but some Promise libraries implement cancel functionality
+                    </td>
+                    <td>
+                        <b>Cancell</b>
+                        <br/>
+                        Just like you can subscribe to an observer, you can also unsubscribe.
+                        <br/>
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Always Async </b>
+                        <br/>
+                        A promise always resolves or rejects itself based on some async activity
+                    </td>
+                    <td>
+                        <b>Async/Sync both</b>
+                        <br/>
+                        Observable can be either asynchronous or synchronous
+                        <br/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>Don't have any operations</b>
+                        <br/>
+                        Don’t provide any operations.
+                    </td>
+                    <td>
+                        <b>Operations</b>
+                        <br/>
+                        Provide the map for forEach, filter, reduce, retry, and retryWhen operators.
+                        <br/>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <!-- ************************************************ -->
+        <br/>
+        <br/>
+        <h6> Sync VS Async For Observable</h6>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Sync call
+                    </th>
+                    <th>
+                        Async call
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td>
+                        source.subscribe({<br/>
+                            next: no =>{<br/>
+                                let loops = 0;<br/>
+                                while(loops !== noOfLoops) {<br/>
+                                loops++;<br/>
+                                }<br/>
+                                console.log("Done loooping" + loops, " ", noOfLoops)<br/>
+                                return observable.next(no)<br/>
+                            },<br/>
+                            error: error => observable.error(error),<br/>
+                            complete: () => observable.complete()<br/>
+                        })<br/>
+                    </td>
+                
+                    <td>
+                        source.subscribe({<br/>
+                        next: no =>{<br/>
+                            setTimeout(() => {<br/>
+                            let loops = 0;<br/>
+                            while(loops !== noOfLoops) {<br/>
+                                loops++;<br/>
+                            }
+                            console.log("Done loooping" + loops, " ", noOfLoops)<br/>
+                            return observable.next(no)<br/>
+                            }, 100);<br/>
+                        },<br/>
+                        error: error => observable.error(error),<br/>
+                        complete: () => observable.complete()<br/>
+                        })<br/>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>  
+  </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>
+        
+        
+        

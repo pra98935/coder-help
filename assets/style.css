@@ -1,0 +1,37 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .active-link{
+      color: red;
+  }
+
+  .primaryClr{
+      color: #0B64C5;
+  }
+  .sidebar{
+    border: 1px solid #c7c7c7;
+    border-radius: 5px;
+}
+
+.headerBG, .footerBG{
+    
+        background-color: #0B64C5;
+        color: white;
+        font-weight: bold;
+        padding: 10px 0;
+
+}
+

@@ -1,0 +1,263 @@
+
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+        <div w3-include-html="sidebar.html"></div> 
+    </div>
+    <div class="col-md-9">
+    <h4>Reactive Form</h4>
+        <h5>
+            Reactive vs Template
+        </h5>
+        <table>
+            <tr>
+                <th>Key Points</th>
+                <th>Reactive</th>
+                <th>Template</th>
+            </tr>
+            <tr>
+                <td>Setup of form model</td>
+                <td>Explicit, created in component class</td>
+                <td>Implicit, created by directives</td>
+            </tr>
+            <tr>
+                <td>Data model</td>
+                <td>Structured and immutable</td>
+                <td>Unstructured and mutable</td>
+            </tr>
+            <tr>
+                <td>Data flow</td>
+                <td>Synchronous</td>
+                <td>Asynchronous</td>
+            </tr>
+            <tr>
+                <td>Form validation</td>
+                <td>Functions</td>
+                <td>Directives</td>
+            </tr>
+        </table>
+
+        <br/>
+
+        <h5>Base Class</h5>
+        <ul>
+                <li><b>FormControl</b> tracks the value and validation status of an individual form control.</li>
+
+                <li><b>FormGroup</b> tracks the same values and status for a collection of form controls.</li>
+                
+                <li><b>FormArray</b> tracks the same values and status for an array of form controls.</li>
+                
+                <li><b>ControlValueAccessor</b> creates a bridge between Angular FormControl instances and native DOM elements.</li>
+        </ul>
+
+        <h5>App Module</h5>
+        <textarea style="width: 100%; height: 250px;" readonly>
+                import { ReactiveFormsModule } from '@angular/forms';
+
+                @NgModule({
+                  imports: [
+                    // other imports ...
+                    ReactiveFormsModule
+                  ],
+                })
+                export class AppModule { }
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- **********************BASIC FORM**************** -->
+        <!-- ************************************************ -->
+
+        <h5 class="primaryClr">Basic Form</h5>
+        <h6 class="primaryClr">Package in component</h6>
+        <textarea style="width: 100%; height: 40px;" readonly>
+            import { FormGroup, FormControl } from '@angular/forms';
+        </textarea>
+
+        <h6 class="primaryClr">component</h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+            profileForm: FormGroup;
+            ngOnInit(){
+                this.profileForm = new FormGroup({
+                    firstname: new FormControl(''),
+                    lastname: new FormControl(''),
+                    address: new FormGroup({
+                        city: new FormControl(''),
+                        zip: new FormControl(''),
+                    })
+                })
+            }
+
+            onSubmit() {
+                // TODO: Use EventEmitter with form value
+                console.log(this.profileForm.value);
+            }
+
+            
+        </textarea>
+
+        <h6 class="primaryClr">HTML</h6>
+        <textarea style="width: 100%; height: 250px;" readonly>
+            <form [formGroup]="profileForm" (submit)="onSubmit()">
+                <input type="text" name="fname" formControlName="firstname">
+                <input type="text" name="lname" formControlName="lastname">
+
+                <div  formGroupName="address">
+                    <input type="text" name="fname" formControlName="city">
+                    <input type="text" name="lname" formControlName="zip">
+                </div>
+
+                <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+
+            </form>
+        </textarea>
+
+        <!-- ************************************************ -->
+        <!-- ***************** UPDATE DATA ****************** -->
+        <!-- ************************************************ -->
+
+        <h6 class="primaryClr">Update Data</h6>
+        <i>
+        <b>setValue()</b> 
+        So let’s assume we have a formgroup with 2 controls: <b>Name & Age</b>.
+        if we want to set the value of one control, this will not work, therefor we have to set the value of both controls.
+        <br/>
+        formgroup.setValue({name: ‘Mocrosoft’, age: ‘25’});
+        <br/>
+        It is necessary to mention all the controls inside the method. If this is not done, it <b>will throw an error</b>.
+        </i>
+        <br/>
+        <i>
+            <b>patchValue()</b>
+            On the other hand patchvalue is a lot easier on that part, let’s say we only want to assign the <b>name</b> as a new value:
+            <br/>
+            formgroup.patchValue({name:’Mocrosoft’});
+            <br/>
+            See how we exclude age and this will work <b>without throwing any errors</b>.
+        </i>
+        <br/>
+        
+
+        <!-- ************************************************ -->
+        <!-- ***************** FORM VALIDATION ************** -->
+        <!-- ************************************************ -->
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+        <h5>Form Validation</h5>
+        <h6>Package in Component</h6>
+        <textarea style="width: 100%; height: 40px;" readonly>
+            import { Validators, FormBuilder } from '@angular/forms';
+        </textarea>
+
+        <h6>Constructor</h6>
+        <textarea style="width: 100%; height: 40px;" readonly>
+            constructor(private fb: FormBuilder){}
+        </textarea>
+
+        <h6>Component</h6>
+        <textarea style="width: 100%; height: 200px;" readonly>
+            this.profileForm = this.fb.group({
+                firstname: ['', [Validators.required, Validators.minLength(10)]],
+                lastname: ['', [Validators.required]],
+                email: ['', [Validators.required, Validators.email]]
+                address: this.fb.group({
+                    city:['', [Validators.required]],
+                    zip:['', [Validators.required]]
+                })
+            })
+        </textarea>
+
+        <h6>HTML</h6>
+        <textarea style="width: 100%; height: 200px;" readonly>
+                <div *ngIf="(
+                        profileForm.get('firstname').dirty ||
+                        profileForm.get('firstname').touched
+                        ) &&
+                        profileForm.get('firstname').invalid">
+                    Please provide your username.
+                </div>
+        </textarea>
+
+
+
+        <!-- ************************************************ -->
+        <!-- ***************** FORM BUILDER ***************** -->
+        <!-- ************************************************ -->
+
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+        <h5 class="">Form Builder</h5>
+        <div><i>Creating form control instances manually can become repetitive when dealing with multiple forms. The FormBuilder service provides convenient methods for generating controls.</i></div>
+        <br/>
+        <h6>Package in Component</h6>
+        <textarea style="width: 100%; height: 40px;" readonly>
+            import { FormBuilder } from '@angular/forms';
+        </textarea>
+
+        <h6>Constructor</h6>
+        <textarea style="width: 100%; height: 40px;" readonly>
+                constructor(private fb: FormBuilder){}
+        </textarea>
+        
+        <h6>Component</h6>
+        <textarea style="width: 100%; height: 200px;" readonly>
+            this.profileForm = this.fb.group({
+                firstname: [''],
+                lastname: [''],
+                address: this.fb.group({
+                    city:[''],
+                    zip:['']
+                })
+            })
+        </textarea>
+        <!-- ************************************************ -->
+        <!-- *******************GET FORM DATA**************** -->
+        <!-- ************************************************ -->
+        <br/>
+        <br/>
+        <div style="border-top:4px solid #333; height: 1px;"></div>
+        <br/>
+        <h5>GET form data</h5>
+        <h6>Component</h6>
+        <i>we can use <b>firstname</b> and <b>city</b> in our html file with <b>interpolation</b> </i>
+        <br/>
+        <textarea style="width: 100%; height: 200px;" readonly>
+                get firstname() {
+                    return this.myProfile.get('firstname').value;
+                }
+                
+                get city() {
+                    return this.myProfile.get("address").get('city').value;
+                }
+
+                onSubmit() {
+                    console.log(this.firstname);
+                    console.log(this.city);
+                    // TODO: Use EventEmitter with form value
+                    console.log(this.profileForm.value);
+                }
+        </textarea>
+        <a href="https://www.concretepage.com/angular/angular-formcontrol-add-remove-validators">Add/Remove Validation</a>
+        <br/>
+        <a href="https://www.digitalocean.com/community/tutorials/angular-reactive-forms-formarray-dynamic-fields" target="_blank">Form Array</a>
+        <br/>
+        <a href="https://www.digitalocean.com/community/tutorials/angular-reactive-forms-custom-validator" target="_blank">Custom Validation (using AbstractControl)</a>
+    </div>  
+  </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>
+        
+        
+        
+        
+        

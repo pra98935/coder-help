@@ -1,0 +1,505 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+       
+            <ul>
+                <li><a href="https://stackoverflow.com/questions/36314/what-is-currying" target="_blank">Curry Function</a></li>
+                <li><a href="https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c" target="_blank">Pure / Impure Function</a></li>
+                <li><a href="https://www.geeksforgeeks.org/difference-between-first-class-and-higher-order-functions-in-javascript/" target="_blank">First Class Function / Higher Order Function</a></li>
+                <li><a href="https://codesource.io/javascript-design-patterns/" target="_blank">Design Pattern</a></li>
+                <li><a href="https://www.javatpoint.com/javascript-object-defineproperty-method" target="_blank">Object.defineProperty(obj, prop, descriptor)</a></li>
+                <li><a href="https://stackoverflow.com/questions/10808109/script-tag-async-defer" target="_blank">Defer vs Async</a></li>
+                <li><a href="https://www.youtube.com/watch?v=X4Iv0TBHDQ4" target="_blank">...Spread</a></li>
+                <li><a href="https://www.youtube.com/watch?v=A09vz3Hzwcw" target="_blank">Rest Param</a></li>
+                <li><a href="https://youtube.com/watch?v=sNhqFofQhFs&list=PL2PkZdv6p7ZkfvmyL6b9zKcotOOzCgHLZ&index=13" target="_blank">De-Structuring</a></li>
+                <li><a href="https://www.youtube.com/watch?v=fuTWE0Mupzk" target="_blank">Event loop</a></li>
+                <li><a href="https://www.youtube.com/watch?v=rdy8ZV0LXV0" target="blank">Async/Await</a></li>
+                <li><a href="https://www.youtube.com/watch?v=ID3e_Q9BC0E" target="_blank">Prototype</a></li>
+                <li><a href="https://www.tutorialspoint.com/html5/html5_web_workers.htm" target="_blank">Web Worker<span style="color:red">(postMessage(), worker.onmessage, worker.terminate())</span></a></li>
+                <li><a href="https://javascript.info/map-set" target="_blank">MAP & SET</a></li>
+                <li>
+                    <b><a href="https://stackoverflow.com/questions/15455009/javascript-call-apply-vs-bind" target="_blank">Bind:-</a> </b> We can bind an object to a common function, so that the function gives different result when its needed.
+                    <b>the bind() method takes an object as an first argument and creates a new function. call & apply doesn't create new function</b>
+                </li>
+                <li>
+                <b>Parameters</b> are variables listed as a part of the function definition.
+                <br/>
+                <b>Arguments</b> are values passed to the function when it is invoked.
+                <br/>
+                <b>Let vs Const vs Var</b> let and const are block scoped. var variables can be updated and re-declared within its scope; let variables can be updated but not re-declared; const variables can neither be updated nor re-declared
+                </li>
+             </ul>
+
+            <h6>Debounce vs Throttling</h6>
+            <div><a href="https://www.youtube.com/watch?v=tJhA0DrH5co" target="_blank">Debounce vs Throttling <span style="color: red">(see video from 5 minutes)</span></a></div>
+            <br/>
+            <h6>Debounce Integration</h6>
+            <textarea style="width: 100%; height: 400px;" readonly>
+                // In HTML File
+                <input type="text" onkeyup="debounceForData()"/> 
+                
+                // In JS File
+                let counter = 0;
+                const getSuggestions = () => {
+                    //Calls API to get Data
+                    console.log("Fetching Data...", counter++);
+                }
+
+                const debounce = function (fn, d) {
+                    let timer;
+                    return function () {
+                    let context = this, args = arguments;
+                    
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                            fn.apply(this, args);
+                        }, d)
+                    }
+                }
+
+                const debounceForData = debounce(getSuggestions, 3000);
+
+            </textarea>
+            <br/>    
+            <br/>   
+            <h5>
+                Code Example for let and var execution
+            </h5>
+                <table>
+                    <tr>
+                        <th width="25%" style="border: 1px solid #333;">Example 1</th>
+                        <th width="25%" style="border: 1px solid #333;">Example 2</th>
+                        <th width="25%" style="border: 1px solid #333;">Example 3</th>
+                        <th width="25%" style="border: 1px solid #333;">Example 4</th>
+                    </tr>
+
+                    <tr>
+                        <td width="25%" style="border: 1px solid #333;">
+                            <code>
+                            function a() {<br/>
+                                &nbsp;console.log(x); <br/>
+                                &nbsp;let x = 20; <br/>
+                                &nbsp;function b() { <br/>
+                                    &nbsp;&nbsp;console.log(x); <br/>
+                                    &nbsp;&nbsp;var x = 30; <br/>
+                                    &nbsp;&nbsp;console.log(x); <br/>
+                                &nbsp;} <br/>
+                                &nbsp;b(); <br/>
+                            }<br/>
+                            a();
+                            <br/>
+                            <br/>
+                            OUTPUT:- Uncaught ReferenceError: Cannot access 'x' before initialization at a (<anonymous>:2:13) at <anonymous>:11:1
+                            </code>
+                        </td>
+                        <td width="25%" style="border: 1px solid #333;">
+                            <code>
+                            function a() {<br/>
+                                &nbsp;console.log('1',x); <br/>
+                                &nbsp;var x = 20; <br/>
+                                &nbsp;function b() { <br/>
+                                    &nbsp;&nbsp;console.log('2', x); <br/>
+                                    &nbsp;&nbsp;var x = 30; <br/>
+                                    &nbsp;&nbsp;console.log('3', x); <br/>
+                                &nbsp;} <br/>
+                                &nbsp;b(); <br/>
+                            }<br/>
+                            a();
+                            <br/>
+                            <br/>
+                            OUTPUT:- <br/>
+                            1 undefined
+                            <br/>
+                            2 undefined
+                            <br/>
+                            3 30
+                            </code>
+                        </td>
+                        <td width="25%" style="border: 1px solid #333;">
+                            <code>
+                            function a() {<br/>
+                                &nbsp;console.log('1',x); <br/>
+                                &nbsp;var x = 20; <br/>
+                                &nbsp;function b() { <br/>
+                                    &nbsp;&nbsp;console.log('2', x); <br/>
+                                    &nbsp;&nbsp;//var x = 30; <br/>
+                                    &nbsp;&nbsp;//console.log('3', x); <br/>
+                                &nbsp;} <br/>
+                                &nbsp;b(); <br/>
+                            }<br/>
+                            a();
+                            <br/>
+                            <br/>
+                            OUTPUT:- <br/>
+                            1 undefined
+                            <br/>
+                            2 20
+                            <!-- <br/>
+                            3 30 -->
+                            </code>
+                        </td>
+                        <td width="25%" style="border: 1px solid #333;">
+                            <code>
+                            function a() {<br/>
+                                &nbsp;console.log('1',x); <br/>
+                                &nbsp;var x = 20; <br/>
+                                &nbsp;function b() { <br/>
+                                    &nbsp;&nbsp;var x = 30; <br/>
+                                    &nbsp;&nbsp;console.log('2', x); <br/>
+                                    &nbsp;&nbsp;//console.log('3', x); <br/>
+                                &nbsp;} <br/>
+                                &nbsp;b(); <br/>
+                            }<br/>
+                            a();
+                            <br/>
+                            <br/>
+                            OUTPUT:- <br/>
+                            1 undefined
+                            <br/>
+                            2 30
+                            <!-- <br/>
+                            3 30 -->
+                            </code>
+                        </td>
+                    </tr>
+                </table>
+                
+              
+
+
+                <br/>
+                <br/>
+                
+
+                <h5>Normal function vs Arrow Function</h5>
+                <table>
+                    <tr>
+                    <th width="50%" style="border: 1px solid #333;">Normal Function</th>
+                    <th width="50%" style="border: 1px solid #333;">Arrow Function</th>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="border: 1px solid #333;">
+                            <code>
+                                let obj = {<br/>
+                                    &nbsp;name: "asim",<br/>
+                                    &nbsp;sayLater: function () {<br/>
+                                        &nbsp;&nbsp;setTimeout(function () {<br/>
+                                            &nbsp;&nbsp;&nbsp;console.log('this',this);<br/>
+                                            &nbsp;&nbsp;&nbsp;console.log('hi',`${this.name}`);<br/>
+                                            &nbsp;&nbsp;}, 1000);<br/>
+                                    &nbsp;}<br/>
+                                };<br/>
+                                obj.sayLater();<br/>
+                                <br/>
+                                OUTPUT:- <br/>
+                                this Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+                                <br/>
+                                <br/>
+                                hi 
+                                <br/>
+                            </code>
+                        </td>
+                        <td width="50%" style="border: 1px solid #333;">
+                            <code>
+                                let obj = {<br/>
+                                    &nbsp;name: "asim",<br/>
+                                    &nbsp;sayLater: function () {<br/>
+                                        &nbsp;&nbsp;setTimeout( () => {<br/>
+                                            &nbsp;&nbsp;&nbsp;console.log('this',this);<br/>
+                                            &nbsp;&nbsp;&nbsp;console.log('hi',`${this.name}`);<br/>
+                                            &nbsp;&nbsp;}, 1000);<br/>
+                                    &nbsp;}<br/>
+                                };<br/>
+                                obj.sayLater();<br/>
+                                <br/>
+                                OUTPUT:- <br/>
+                                this {name: 'asim', sayLater: ƒ}
+                                <br/>
+                                <br/>
+                                hi asim
+                            </code>
+                        </td>
+                    </tr>
+                </table>
+                <br/>   
+
+                <h5>Curry Function Example</h5>
+                <code>
+                function curry(a){<br/>
+                    &nbsp;return function(b){<br/>
+                        &nbsp;&nbsp;return function(c){<br/>
+                            &nbsp;&nbsp;&nbsp;console.log(a+b+c);<br/>
+                            &nbsp;&nbsp;&nbsp;return a+b+c;<br/>
+                        &nbsp;&nbsp;}<br/>
+                    &nbsp;}<br/>
+                }<br/>
+                let out = curry(5)(6)(4);<br/>
+                output => 15<br/>
+                </code>
+
+
+                <br/>
+                <br/>
+                <h5>Lexical Scope vs Closure</h5>
+                <ul>
+                    <li><b>The lexical scope</b> allow a function scope to access statically the variable from the outer scopes</li>
+                </ul>
+                <code>
+                let globalVar = 20;<br/>
+                const outerFun = (num1) => {<br/>
+                    &nbsp;let num2 = 10;<br/>
+                    &nbsp;const innerFun = () => {<br/>
+                        &nbsp;&nbsp;let sum = num1+num2+globalVar;<br/>
+                        &nbsp;&nbsp;console.log(sum);<br/>
+                    &nbsp;}<br/>
+                    &nbsp;innerFun();<br/>
+                }<br/>
+                outerFun(5);<br/>
+                output => 35<br/>
+                </code>
+
+                <br/>
+                <br/>
+                <ul>
+                    <li><b>Closure defination 1 =></b> a Closure is a function that captures variable from it's lexical scope.</li>
+                    <li><b>Closure defination 2 =></b> inner function can have access to the outer function variable as well as all the global variable</li>
+                </ul>
+                <code>
+                let globalVar = 10;<br/>
+                const outerFun = (num1) => {<br/>
+                    &nbsp;let num2 = 15;<br/>
+                    &nbsp;const innerFun = () => {<br/>
+                        &nbsp;&nbsp;console.log(num1+num2+globalVar);<br/>
+                        &nbsp;}<br/>
+                    &nbsp;return innerFun<br/>
+                }<br/>
+
+                let inner = outerFun(10);<br/>
+                // console.dir(inner); it will give you innerFun detail.<br/>
+                inner();<br/>
+                output => 35<br/>
+                </code>
+
+                <br/>
+                <br/>
+                <h5>Type of Error</h5>
+                <ul>
+                    <li><b>Load time errors:</b> Errors that come up when loading a web page, like improper syntax errors, are known as Load time errors and generate the errors dynamically.</li>
+                    <li><b>Runtime errors:</b> Errors that come due to misuse of the command inside the HTML language.</li>
+                    <li><b>Logical Errors:</b> These are the errors that occur due to the bad logic performed on a function with a different operation.</li>
+                </ul>
+
+                <br/>
+                <br/>
+
+                <h5>Anonymous Function</h5>
+                <p>
+                    A function that is declared without any named identifier is known as an anonymous function. In general, an anonymous function is inaccessible after its declaration.
+                </p>
+                <code>
+                var anon = function() {
+                    &nbsp;&nbsp; alert('I am anonymous');
+                };
+                anon();
+                </code>
+
+                <br/>
+                <br/>
+                <h5>Important</h5>
+                <ul>
+                <li>
+                <b>Variable typing:=> </b> assigns a number to a variable and then assigns a string to the same variable.
+                </li>
+                <li>
+                <b>Negative Infinity</b> is a number in JavaScript which can be derived by dividing negative number by zero.
+                </li>
+                </ul>
+                <!-- ========================== -->
+                <br/>
+                <br/>
+                <h5>Undefined vs Null</h5>
+                <img src="../../assets/image/null-undefined.png" style="width: 100%"/>
+                <!-- ========================== -->
+                <br/>
+                <br/>
+                <h5>call, apply,bind</h5>
+                <b>call:- </b> an object can use a method belong to another object and it takes argument seprately. doesn't create a new function like bind
+                <br/>
+                <br/>
+                <b>apply:</b> an object can use a method belong to another object and it takes argument as an array. doesn't create a new function like bind
+                <br/>
+                <br/>
+                <b>bind: </b> 
+                <ol>
+                <li>we can bind an object to a common function, so that the function gives different result when it's need. it create new function & call later. </li>
+                <li>bind method takes an object as a first argument and create a new function()</li>
+                <li><a href="https://www.youtube.com/watch?v=SsLlT7Mv8ZY" target="_blank">bind <span style="color:red">start video from 9 minutes</span></a></li>
+                </ol>
+
+                <!-- ========================== -->
+                <br/>
+                <br/>
+                <h5>shallow copy of object <a href="https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/" target="_blank">Ref</a></h5>
+                <p>A deep copying means that value of the new variable is disconnected from the original variable while a shallow copy means that some values are still connected to the original variable.</p>
+                <code>
+                let obj = {
+                    <br/>
+                    &nbsp;name:"prashant",
+                    <br/>
+                    &nbsp;address:{
+                        <br/>
+                        &nbsp;&nbsp;city:"gwalior"
+                        <br/>
+                    &nbsp;}
+                    <br/>
+                }
+                <br/>
+                <br/>
+
+                let objCopy = Object.assign({}, obj);
+                <br/>
+                objCopy.name = "mini";
+                <br/>
+                objCopy.address.city = "seondha";
+                <br/>
+                <br/>
+                console.log('Original Object ===>', obj);
+                console.log('Copy Object ===>',objCopy);
+                <br/>
+                <br/>
+                Original Object ===> 
+                <br/>
+                {   
+                    <br/>
+                    &nbsp;name: 'prashant',  // parent key value will be seprate or both object
+                    <br/>
+                    &nbsp;address: { 
+                        <br/>
+                        &nbsp;&nbsp;city: 'seondha' // child key value will be same
+                        <br/>
+                    &nbsp;} 
+                    <br/>
+                }
+                <br/>
+                <br/>
+                Copy Object ===> 
+                <br/>
+                { 
+                    <br/>
+                    &nbsp;name: 'mini', // parent key value will be different
+                    <br/> 
+                    &nbsp;address: { 
+                        <br/>
+                        &nbsp;&nbsp;city: 'seondha' // child key value will be same
+                        <br/>
+                    &nbsp;} 
+                    <br/>
+                }
+                </code>
+
+                <!-- ========================== -->
+                <br/>
+                <br/>
+                <h5>deep copy of object <a href="https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/" target="_blank">Ref</a></h5>
+                <p>A deep copying means that value of the new variable is disconnected from the original variable while a shallow copy means that some values are still connected to the original variable.</p>
+                <br/>
+                <code>
+                let obj = {
+                    <br/>
+                    &nbsp;name:"prashant",
+                    <br/>
+                    &nbsp;address:{
+                        <br/>
+                        &nbsp;&nbsp;city:"gwalior"
+                        <br/>
+                    &nbsp;}
+                    <br/>
+                }
+                <br/>
+                <br/>
+
+                let objCopy = JSON.parse(JSON.stringify(obj));
+                <br/>
+                objCopy.name = "mini";
+                <br/>
+                objCopy.address.city = "seondha";
+                <br/>
+                <br/>
+                console.log('Original Object ===>', obj);
+                console.log('Copy Object ===>',objCopy);
+                <br/>
+                <br/>
+                Original Object ===> 
+                <br/>
+                {   
+                    <br/>
+                    &nbsp;name: 'prashant', 
+                    <br/>
+                    &nbsp;address: { 
+                        <br/>
+                        &nbsp;&nbsp;city: 'gwalior' 
+                        <br/>
+                    &nbsp;} 
+                    <br/>
+                }
+                <br/>
+                <br/>
+                Copy Object ===> 
+                <br/>
+                { 
+                    <br/>
+                    &nbsp;name: 'mini',
+                    <br/> 
+                    &nbsp;address: { 
+                        <br/>
+                        &nbsp;&nbsp;city: 'seondha' 
+                        <br/>
+                    &nbsp;} 
+                    <br/>
+                }
+                </code>
+
+                <!-- ================================ -->
+                <br/>
+                <br/>
+                <h5>preventDefault</h5>
+                <p>The preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.</p>
+                <textarea style="width:100%; height:50px">
+                    <a id="myAnchor" href="https://w3schools.com/">Go to W3Schools.com</a>
+                </textarea>
+                <code>
+                document.getElementById("myAnchor").addEventListener("click", function(event){
+                    <br/>
+                    &nbsp;alert('before');
+                    <br/>
+                    &nbsp;event.preventDefault();
+                    <br/>
+                    &nbsp;alert('after');
+                    <br/>
+                });
+                <br/>
+                output => 
+                <br/>
+                alert('before');
+                <br/>
+                link will not work here 
+                <br/>
+                alert('after')
+                <br/>
+                </code>
+
+
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

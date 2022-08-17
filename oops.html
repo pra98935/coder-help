@@ -1,0 +1,33 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+        private - Only the current class will have access to the field or method.
+        <br/>
+        <br/>
+        protected - Only the current class and subclasses (and sometimes also same-package classes) of this class will have access to the field or method.
+        <br/>
+        <br/>
+        public - Any class can refer to the field or call the method.
+        <br/>
+        <br/>
+        <ul>
+            <li><a href="https://www.techiediaries.com/object-oriented-programming-concepts/" target="_blank">OOPS</a></li>
+            <li><a href="https://blog.jetbrains.com/webstorm/2019/03/write-object-oriented-typescript-encapsulation/" target="_blank">Encapsulation</a></li>
+            <li><a href="https://www.tutorialsteacher.com/typescript/abstract-class" target="_blank">Abstract</a></li>
+            <li><a href="https://www.tutorialsteacher.com/typescript/typescript-static" target="_blank">Static</a></li>
+        </ul>
+        </div>  
+    </div>
+</div>
+
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

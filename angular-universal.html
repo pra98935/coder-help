@@ -1,0 +1,41 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <a href="https://www.youtube.com/watch?v=s6-G0TWZkvg" target="_blank">Angular Universal Video</a>
+            <br/>
+            <a href="" target="_blank">Doc</a>
+
+            <h5>Angular Universal use</h5>
+            <ul>
+                <li>SEO purpose, if you will check source code for any page without integrate universal it will show you main index.html file and during google crawl content will not read that's why need server side rendering. after integrate universal it will give source code for exact page  </li>
+                <li>show the first page quickly</li>
+                <li>Improve performance in mobile</li>
+            </ul>
+
+            <h5>Basic Setup</h5>
+            <ul>
+                <li><b>ng add @nguniversal/express-engine</b> after run this command, some server related files will be create </li>
+                <li><b>npm run build:ssr</b> after run this command dist folder will create. it will contain some folder like browser & server </li>
+                <li><b>npm run serve:ssr</b> it will provide you new port for your app</li>
+            </ul>
+
+            <h5>Note</h5>
+            <ul>
+                <li>if you want to change port for SSR application, path => project folfer => server.ts</li>
+            </ul>
+           
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

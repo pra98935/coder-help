@@ -1,0 +1,182 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+       
+            <ul>
+                <li><a href="https://newbedev.com/what-is-the-difference-between-ngfor-and-ngforof-in-angular2" target="_blank">NgFor vs NgForOf</a></li>
+                <li><a href="https://stackoverflow.com/questions/37965647/hostbinding-and-hostlistener-what-do-they-do-and-what-are-they-for" target="_blank">@HostListener & @HostBinding</a></li>
+                <li><a href="https://stackoverflow.com/questions/43124998/how-to-pass-values-to-directive-in-angular" target="_blank">Pass Data to Directive</a></li>
+                <li><a href="https://www.tektutorialshub.com/angular/custom-directive-in-angular/" target="_blank">Custom Directive</a></li>
+                <li><a href="https://www.techiediaries.com/fix-cors-with-angular-cli-proxy-configuration/" target="_blank">CORS</a></li>
+            </ul>
+
+            <!-- ====================================== -->
+            
+            <h5>ng-template</h5>
+            <textarea style="width: 100%; height: 250px;" readonly>
+            <div *ngIf="userr; else showItem2">
+                {{itm1}}
+            </div>
+
+            <ng-template #showItem2>
+                {{itm2}}
+            </ng-template>
+            </textarea>
+            
+            <!-- ====================================== -->
+            <br/>
+            <br/>
+            <h5>Custome Directive</h5>
+
+            <textarea style="width: 100%; height: 30px;" readonly>
+                <p appStyledir role="admin">hi hello</p>
+            </textarea>
+            <code>
+                constructor(private _renderer: Renderer2, private ref: ElementRef ) {}
+                <br/>
+                <br/>
+                @HostBinding('attr.role') role = 'admin';
+                <br/>
+                <br/>    
+                @HostListener('click') onClickFun(){
+                    <br/>
+                    &nbsp;this.role = this.role == 'admin' ? 'guest' : 'admin';
+                    <br/>
+                }
+                <br/>
+                <br/>
+                @HostListener('mouseenter') mouseenterFun(){
+                    <br/>
+                    &nbsp;this._renderer.setStyle(this.ref.nativeElement,'backgroundColor', 'red')
+                    <br/>
+                }
+                <br/>
+                <br/>
+                @HostListener('mouseleave') mouseleaveFun(){
+                    <br/>
+                    &nbsp;this._renderer.setStyle(this.ref.nativeElement,'backgroundColor', 'yellow')
+                    <br/>
+                }
+                <br/>
+                <br/>
+                <br/>
+            </code>
+
+            <!-- =========================== -->
+            <br/>
+            <br/>
+            <h5>Custom Pipe</h5>
+            <textarea style="width: 100%; height: 30px;" readonly>
+                <p>{{multiConst | multiply : 3 : 4}}</p>
+            </textarea>
+
+            <code>
+            export class MultiplyPipe implements PipeTransform {
+                <br/>
+                &nbsp;transform(value: number, ...args: number[]): number {
+                    <br/>
+                    &nbsp;&nbsp;let output = 1;
+                    <br/>
+                    &nbsp;&nbsp;args.forEach((elm) => {
+                    <br/>
+                    &nbsp;&nbsp;&nbsp;output *= elm
+                    <br/>
+                    &nbsp;&nbsp;})
+                    <br/>
+                    &nbsp;&nbsp;return output * value;
+                    <br/>
+                &nbsp;}
+                <br/>
+            }
+            </code>
+            
+            <!-- ================================== -->
+            <br/>
+            <br/>
+            <h5>Building Block</h5>
+            <ul>
+                <li>Module</li>
+                <li>Component</li>
+                <li>Template</li>
+                <li>Outputs</li>
+                <li>Data Binding</li>
+                <li>Directive</li>
+                <li>Service</li>
+                <li>Dependency Injection</li>
+            </ul>
+
+            <!-- ================================== -->
+            <br/>
+            <br/>
+            <h5>Compiler</h5>
+            <ol>
+            <li>AOT</li>
+            <li>JIT</li>
+            </ol>
+
+            <!-- ======================================= -->
+            <br/>
+            <br/>
+            <h5>Metadata & Decorator</h5>
+            <p>
+            <b>A Decorator</b> is a special kind of declaration that can be attached to a class declaration, method, accessor, property, or parameter. Decorators use the form @expression, where expression must evaluate to a function that will be called at runtime with information about the decorated declaration.
+            <br/>
+            <br/>
+            <b>Metadata</b> is used to decorate a class so that it can configure the expected behavior of the class. Following are the different parts for metadata.
+            </p>
+            <!-- ======================================= -->
+            <br/>
+            <br/>
+            <h5>decorator for @NgModule</h5>
+            <ol>
+                <li>providers</li>
+                <li>declarations</li>
+                <li>imports</li>
+                <li>exports</li>
+                <li>entryComponents</li>
+                <li>bootstrap</li>
+                <li>schemas</li>
+                <li>id</li>
+            </ol>
+            <!-- ================================================== -->
+            <br/>
+            <br/>
+            <h5>polyfills</h5>
+            <p>it is basically those extra lines of code that makes your application compatible with different browsers. Generally, the code we write is in ES6 which is not compatible with IE or firefox and needs some background setups before being able to be viewed or used in these browsers. So, the polyfills take up the task and do these low-level setups for you.</p>
+
+            <!-- ===================== -->
+            <br/>
+            <br/>
+            <textarea style="width: 100%; height: 200px;" readonly>
+            template: `
+            <button (click)="value=1">select - 1</button>
+            <button (click)="value=2">select - 2</button>
+            <button (click)="value=3">select - 3</button>
+            <h5>You selected : {{value}}</h5>
+            
+            <hr>
+            <div [ngSwitch]="value">
+            
+                <div *ngSwitchCase="1">1. Template - <b>{{value}}</b> </div>
+                <div *ngSwitchCase="2">2. Template - <b>{{value}}</b> </div>
+                <div *ngSwitchCase="3">3. Template - <b>{{value}}</b> </div>
+                <div *ngSwitchDefault>Default Template</div>
+            
+            </div>
+            </textarea>
+
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

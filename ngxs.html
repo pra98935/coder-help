@@ -1,0 +1,151 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <a href="https://www.youtube.com/watch?v=WMQ4_bHl4oc&list=PLLhsXdvz0qjJM9eAOXtuA5QqNGqk494Hw&index=7" target="_blank">Ngxs</a>
+            <br/>
+            <a href="https://www.ngxs.io/getting-started/installation" target="_blank">NgxS doc</a>
+            <br/>
+            <br/>
+            <h5><b>State Management : </b>the technique or the way by which we can maintain / store the state of the page or application until the User's Session ends.</h5>
+
+            <h5>Installation</h5>
+            <code>
+            npm install @ngxs/store --save
+            <br/>
+            npm install @ngxs/logger-plugin --save (plugin to check log in console)
+            <br/>
+            npm install @ngxs/devtools-plugin --save-dev (plugin, chrome addon to check state data in tool)
+            </code>
+
+            <!--  =================== -->
+            <br/>
+            <br/>
+            <h5>Folder Structure</h5>
+            <ul>
+                <li>Create folder  inside app with store name manually </li>
+                <li>Create action and state folder under store manually </li>
+                <li>Create employee.action.ts under action folder</li>
+                <li>Create employee.state.ts under state folder</li>
+            </ul>
+
+            <!-- ========================== -->
+            <br/>
+            <br/>
+            <h5>app.module.ts</h5>
+            <code>
+                import { NgxsModule } from '@ngxs/store';
+                <br/>
+                import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+                <br/>
+                import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+                <br/>
+                import { EmployeeState } from './store/state/employee.state';
+
+                <br/>
+                <br/>
+                imports: [
+                    <br/>
+                    &nbsp;NgxsModule.forRoot([EmployeeState]),
+                    <br/>
+                    &nbsp;NgxsLoggerPluginModule.forRoot(), // plugin
+                    <br/>
+                    &nbsp;NgxsReduxDevtoolsPluginModule.forRoot(), // plugin
+                    <br/>
+                ],
+            </code>
+            <!-- ==================  -->
+            <br/>
+            <br/>
+            <h5>Action file</h5>
+            <code>
+            export class AddEmployee{
+                <br/>
+                &nbsp;static readonly type = '[Employee] Add';
+                <br/>
+                &nbsp;constructor(public payload:any){}
+                <br/>
+            }
+            </code>
+
+            <br/>
+            <br/>
+            
+            <code>
+            //get method no need constructor if we are not pasing any payload
+            <br/>
+            export class GetEmployee{
+                <br/>
+                &nbsp;static readonly type = '[Employee] Get'
+                <br/>
+            }
+            </code>    
+
+            <br>
+            <br/>
+
+            <code>
+            export class SetEmployee{
+                <br/>
+                &nbsp;static readonly type = '[Employee] Set';
+                <br/>
+                &nbsp;constructor(public id:string){};
+                    <br/>
+            }
+            </code>
+            
+            <br/>
+            <br/>
+
+            <code>
+            export class DeleteEmployee{
+                <br/>
+                &nbsp;static readonly type = '[Employee] Delete';
+                <br/>
+                &nbsp;constructor(public id:string){}
+                <br/>
+            }
+            </code>
+
+            <br/>
+            <br/>
+
+            <code>
+            // if we required extra payload like id
+            <br/>
+            export class UpdateEmployee{
+                <br/>
+                &nbsp;static readonly type = '[Employee] Update';
+                <br/>
+                &nbsp;constructor(public payload:any, public id:string){}
+                    <br/>
+            }
+            </code>
+
+            <!-- ============================ -->
+            <br/>
+            <br/>
+            <h5>State</h5>
+            <a href="../../assets/doc/Ngxs-state.pdf" target="_blank">State Ngxs</a>
+
+            <!-- ============================ -->
+            <br/>
+            <br/>
+            <h5>employee.componenet.ts</h5>
+            <a href="../../assets/doc/Ngxs-employee-componenet.pdf" target="_blank">State Ngxs</a>
+            <br/>
+            <br/>
+        </div>  
+    </div>
+</div>
+
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

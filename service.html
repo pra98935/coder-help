@@ -1,0 +1,156 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+    <div class="col-md-9">
+
+    <h4>
+                    Service
+                </h4>
+
+                    <h5>DI</h5>
+                    <p>Dependency Injection (DI) is a core concept of Angular 2+ and allows a class receive dependencies from another class. Most of the time in Angular, dependency injection is done by injecting a service class into a component or module class.</p>
+
+                    <p><b>instanceof </b>used to check the type of an object at run time. It returns a boolean value if true then it indicates that the object is an instance of a particular class and if false then it is not.</p>
+
+                    <h5>App Module</h5>
+                    <textarea style="width: 100%; height: 100px;" readonly>
+                        import {HttpClientModule} from '@angular/common/http';
+                        imports: [
+                            HttpClientModule,
+                        ]
+                    </textarea>
+
+                    <h5>Package in service file</h5>
+                    <textarea style="width: 100%; height: 150px;" readonly>
+                            import { Injectable } from '@angular/core';
+                            import { Observable, of, throwError } from 'rxjs';
+                            import { HttpClient, HttpHeaders } from '@angular/common/http';
+                            import { map } from 'rxjs/operators';
+                            import { retry, catchError } from 'rxjs/operators';
+                    </textarea>
+    
+                    <h5>Constructor</h5>
+                    <textarea style="width: 100%; height: 150px;" readonly>
+                            headers;
+                            constructor(private _http: HttpClient) {
+                              this.headers = new HttpHeaders();
+                              this.headers.append('Content-Type', 'application/json');
+                            }
+                    </textarea>
+    
+                    <h5>Function</h5>
+                    <textarea style="width: 100%; height: 320px;" readonly>
+                            /**
+                            * Get manager view report
+                            * @param object, filter object 
+                            */
+                            getManagerViewReport(object): Observable<Model> {
+                                return this._http.post<Model>(URL, object).pipe(
+                                map(data => {
+                                    return data;
+                                }),
+                                retry(1),
+                                catchError(this.handleError.bind(this))
+                                );
+                            }   
+                    </textarea>
+    
+                    <h5>Error Handling</h5>
+                    <textarea style="width: 100%; height: 320px;" readonly>
+                            /**
+                            * error Handling
+                            * @param error , Error data
+                            */
+                             handleError(error) {
+                               let errorMessage = '';
+                               if (error.error instanceof ErrorEvent) {
+                                 // Get client-side error
+                                 errorMessage = error.error.message;
+                               } else {
+                                 // Get server-side error
+                                 errorMessage = `Error Code: ${error.status} \nMessage: ${error.message}`;
+                               }
+                               return throwError(errorMessage);
+                             }
+                    </textarea>
+
+                    <!-- ************************************************ -->
+                    <!-- ************************************************ -->
+                    <!-- ************************************************ -->
+
+                    <br/>
+                    <br/>
+                    <div style="border-top:4px solid #333; height: 1px;"></div>
+                    <br/>
+                    
+                    <h5>How to use Service in Component</h5>
+                    <h6>Subscribe method in component</h6>
+                    <textarea style="width: 100%; height: 320px;" readonly>
+                      import { Component, OnInit } from '@angular/core';
+                      import { UserService } from './user.service';
+
+                      @Component({
+                        selector: 'app-us-value',
+                        templateUrl: './us-value.component.html',
+                        styleUrls: [ './us-value.component.css' ]
+                      })
+                      export class UsValueComponent implements OnInit {
+                        myValue: string;
+
+                        constructor(private usService: UserService) {}
+
+                        ngOnInit() {
+                            this.usService.getValue().subscribe((res: any) => {  
+                              this.myValue = res
+                            });
+                        }
+                      }
+                    </textarea>
+
+                    <h6>Unsubscribe method in component</h6>
+                    <textarea style="width: 100%; height: 320px;" readonly>
+                      import { Component, OnInit, OnDestroy } from '@angular/core';
+                      import { UserService } from './user.service';
+
+                      @Component({
+                        selector: 'app-us-value',
+                        templateUrl: './us-value.component.html',
+                        styleUrls: [ './us-value.component.css' ]
+                      })
+                      export class UsValueComponent implements OnInit, OnDestroy {
+                        myValue: string;
+                        myValueSub: Subscription;
+
+                        constructor(private usService: UserService) {}
+
+                        ngOnInit() {
+                          this.myValueSub = this.usService.getValue().subscribe.subscribe((res: any) => {  
+                              this.myValue = res
+                          });
+                        }
+
+                        ngOnDestroy() {
+                          if (this.myValueSub) {
+                              this.myValueSub.unsubscribe();
+                          }
+                        }
+                      }
+                    </textarea>
+                    <a href="https://wesleygrimes.com/angular/2019/03/29/making-upgrades-to-angular-ngondestroy.html" target="_blank">Read More</a> 
+
+                    <br/>
+                    <br/>
+    </div>  
+
+  </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

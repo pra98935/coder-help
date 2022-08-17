@@ -1,0 +1,101 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <a href="https://dzone.com/articles/angular-app-state-management-with-ngrx">NgRx</a>
+            <a href="https://www.youtube.com/watch?v=EGixFf47xN8&list=PL6GcqPPzylek8FzKSfPXnMYSf94lfsqxN">Video</a>
+
+
+            <ul>
+            <li><b>Store:</b> The store is what holds the app's state. </li>
+
+            <li><b>Action:</b> A unique event dispatched from components and services that describe how the state should be changed. For example, ‘Add Customer’ can be an action that will change the state (i.e. add a new customer to the list).</li>
+
+            <li><b>Reducer:</b> All the state changes happen inside the reducer; it responds to the action and, based on that action, it will create a new immutable state and return it to the store.</li>
+
+            <li><b>Selector:</b> Selector is a function used for obtaining a part of the state from the store.</li>
+
+            <li><b>Effect:</b> A mechanism that listens for dispatched actions in an observable stream, processes the server response, and returns new actions either immediately or asynchronously to the reducer to change the state. Please note that we are not using 'effect' in this example app.</li>
+            </ul>
+
+            <h5>Install NgRx</h5>
+            <code>
+            1) ng add @ngrx/schematics@latest
+            <br/>
+            <br/>
+            Configure the Schematics so that NgRx commands are available in Angular CLI by default.
+            <br/>
+            2) ng config cli.defaultCollection @ngrx/schematics
+            <br/>
+            <br/>
+            Let’s install the NgRx,  dependencies, and dev-tools now.
+            <br/>
+            3) npm install @ngrx/store --save 
+            <br/>
+            4) npm install @ngrx/effects --save 
+            <br/>
+            5) npm install @ngrx/entity --save 
+            <br/>
+            6) npm install @ngrx/store-devtools --save
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Let’s generate NgRx Store in the app.</h5>
+            <code>
+                ng generate @ngrx/schematics:store State --root --module app.module.ts
+                <br/>
+                <br/>
+                Notice that the following line has been added to the app.module.ts
+                <br/>
+                StoreModule.forRoot(reducers, { metaReducers }),
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Create a sub Module for Customer</h5>
+            <code>
+            ng generate module Customer
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Create a Customer model</h5>
+            <code>
+            ng generate class models/customer
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Add Action</h5>
+            <code>
+            ng generate action customer/store/action/Customer
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Add a Customer Reducer</h5>
+            <code>
+            ng generate reducer customer/store/reducer/Customer
+            </code>
+
+            <br/>
+            <br/>
+            <h5>Add Selector</h5>
+            <code>
+            ng generate selector customer/store/selector/Customer
+            </code>
+
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

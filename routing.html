@@ -1,0 +1,52 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <h4>Routing Details</h4>
+            <h5>
+                Auxilary Router Outlet
+            </h5>
+            <ul>
+                <li><a href="https://www.techiediaries.com/object-oriented-programming-concepts/" target="_blank">Auxilary Router Outlet</a></li>
+            </ul>
+
+            <h5>
+                Get Current URL
+            </h5>
+            <textarea style="width: 100%; height: 280px;" readonly>
+                // Package 
+                import { Router, NavigationEnd } from '@angular/router';
+
+                // constructor
+                constructor(private router: Router) {}
+
+                // Get Current URL
+                this.router.events.pipe(filter(e => e instanceof NavigationEnd))
+                .subscribe((s: NavigationEnd) => {
+                    //this.currentPage = s.urlAfterRedirects;
+                    let prodPage = s.urlAfterRedirects.includes("products") 
+                    if(prodPage == true){
+                    this.isShopPage = true;
+                    }else{
+                    this.isShopPage = false;
+                    }
+                });
+            </textarea>
+
+            <p><b>instanceof : </b>checks whether an object is an instance of a specific class or an interface.</p>
+            <br/>
+            <br/>
+            <a href="../../assets/doc/route-param.pdf" target="_blank">Get Route</a>
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

@@ -1,0 +1,190 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div>
+        </div>
+
+        <div class="col-md-9">
+            <h4>Component Communication</h4>
+
+            <h5>Parent To Child</h5>
+            
+            <h6>Parent Component HTML File</h6>
+            <textarea style="width: 100%; height: 40px;" readonly>
+                <app-child [userInfo]="data"></app-child>
+            </textarea>
+
+            <h6>Child Component TS File</h6>
+            <textarea style="width: 100%; height: 300px;" readonly>
+                import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+
+                @Input('userInfo') userInfoData: any;
+                userData: any;
+
+                ngOnChanges(changes: SimpleChanges) {
+                    if (changes.hasOwnProperty("userInfo")) {
+                        if (changes.userInfo.firstChange === false) {
+                            // You can write code here
+                            this.userData = changes.userInfo.currentValue;
+                        }
+                    }
+                }
+            </textarea>
+
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            
+            <br/>
+            <br/>
+            <div style="border-top:4px solid #333; height: 1px;"></div>
+            <br/>
+
+            <h5>Child To Parent</h5>
+            
+            <h6>Parent Component HTML File</h6>
+            <textarea style="width: 100%; height: 40px;" readonly>
+                <app-child (customClick)="getDataFromParent($event)"></app-child>
+            </textarea>
+
+            <h6>Parent Component TS File</h6>
+            <textarea style="width: 100%; height: 80px;" readonly>
+                getDataFromParent(e){
+                    console.log(e);
+                }
+            </textarea>
+
+            <h6>Child Component HTML File</h6>
+            <textarea style="width: 100%; height: 40px;" readonly>
+                <button (click)="fireEvent(userData)">Hit Me</button>
+            </textarea>
+
+            <h6>Child Component TS File</h6>
+            <textarea style="width: 100%; height: 250px;" readonly>
+                import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+                @Output() customClick = new EventEmitter();
+
+                userData;
+
+                ngOnInit() {
+                    this.userData = {
+                        'name':'prashant'
+                    }  
+                }
+
+                fireEvent(e){
+                    this.customClick.emit(e);
+                }
+            </textarea>
+
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            
+            <br/>
+            <br/>
+            <div style="border-top:4px solid #333; height: 1px;"></div>
+            <br/>
+
+            <h5>Subject / Behaviour Subject (Share data b/w component and they don't have any relation like parent/child)</h5>
+
+            <div> <b> Note:- </b> BehaviorSubject takes 1 param that is mandatory but in Subject that is not mandatory </div>
+            <br/>
+            <h6>Common Service File</h6>
+            <textarea style="width: 100%; height: 300px;" readonly>
+                import { Subject, BehaviorSubject } from 'rxjs';
+
+                // Code for subject
+                private commonData = new Subject<any>();
+                
+                commonData$ = this.commonData.asObservable();
+
+                public ShareData(data: any) {
+                    this.commonData.next(data);
+                }
+
+                // Code for Behaviour subject
+                private themeData = new BehaviorSubject<any>('red');
+                
+                themeCurrentData$ = this.themeData.asObservable();
+
+                public setThemeData(data: any) {
+                    this.themeData.next(data);
+                }
+            </textarea>
+
+            <h6>Component 1</h6>
+            <textarea style="width: 100%; height: 400px;" readonly>
+                import { Commonservice } from '../../services/commonservice.service';
+
+                constructor(private commonService: Commonservice) { }
+
+                selectedThemeColor;
+                selecteddata;
+
+                /////////////////////////////////
+                ////////Behavior Subject/////////
+                /////////////////////////////////
+
+                // Get Theme Color
+                getThemeClr() {
+                    this.commonService.themeCurrentData$.subscribe(
+                        data => {
+                            this.selectedThemeColor = data;
+                        }
+                    )
+                }
+
+                // Set Theme Color
+                onThemeChange(themeColor: any) {
+                    this.commonService.setThemeData(themeColor);
+                }
+
+                /////////////////////////////////
+                /////////////////Subject/////////
+                /////////////////////////////////
+
+                // Get Common data
+                getCommonData() {
+                    this.commonService.commonData$.subscribe(
+                        data => {
+                            this.selecteddata = data;
+                        }
+                    )
+                }
+
+                // Set Common Data
+                setData(data: any) {
+                    this.commonService.ShareData(data);
+                }
+            </textarea>
+
+            <ul>    
+                <li>
+                    <a href="https://stackoverflow.com/questions/39494058/behaviorsubject-vs-observable" target="_blank">
+                        Observable vs Subject vs Behaviour Subject vs Replay Object
+                    </a>
+                </li>
+                <li>
+                    <a href="https://medium.com/@mrahmedkhan019/smart-dumb-components-in-angular-e1d6dbd6edff" target="_blank">
+                        Dumb Componenet and Smart Component
+                    </a>      
+                </li>
+            </ul>
+
+            
+
+
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

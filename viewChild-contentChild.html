@@ -1,0 +1,129 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <h4>@viewChild</h4>
+
+            <h5>How to change view using viewChild</h5>
+            <h6>Package in component</h6>
+            <textarea style="width: 100%; height: 40px;" readonly>
+                import { viewChild , Renderer2, ElementRef} from '@angular/core'
+            </textarea>
+
+            <h6>Template Code</h6>
+            <textarea style="width: 100%; height: 100px;" readonly>
+                <div #msg>
+                    <h1>Hi How Are You</h1>
+                </div>    
+            </textarea>
+
+            <h6>Component Code</h6>
+            <textarea style="width: 100%; height: 300px;" readonly>
+                export class GeoIPLocationComponent implements OnInit, AfterViewInit {
+                    constructor(private rendrer: Renderer2) { }
+
+                    @viewChild('msg') msg: ElementRef;
+
+                    ngOnInit() {
+        
+                    }
+
+                    ngAfterViewInit(){
+                        console.log(this.msg);
+                        this.rendrer.setStyle(this.msg.nativeElement, 'backgroundColor', 'red');
+                        this.rendrer.setStyle(this.msg.nativeElement, 'myClass');
+                    }
+                }
+            </textarea>
+
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+
+            <br/>
+            <br/>
+            <div style="border-top:4px solid #333; height: 1px;"></div>
+            <br/>
+
+            <h4>@ContentChild</h4>
+
+            <h5>How to change view using contentchild</h5>
+
+            <h6>Package in component</h6>
+            <textarea style="width: 100%; height: 40px;" readonly>
+                import {ContentChild , Renderer2, ElementRef} from '@angular/core'
+            </textarea>
+
+            <h6>Parent Component HTML file</h6>
+            <textarea style="width: 100%; height: 80px;" readonly>
+                <app-child>
+                    <p #childcon>We are passing this data from parent</p>
+                </app-child>       
+            </textarea>
+
+            <h6>Child Component HTML file</h6>
+            <textarea style="width: 100%; height: 80px;" readonly>
+                This is Child Component
+                <ng-content></ng-content>
+            </textarea>
+
+            <h6>Child Component</h6>
+            <textarea style="width: 100%; height: 300px;" readonly>
+                export class GeoIPLocationComponent implements OnInit, AfterContentInit {
+                    constructor(private rendrer: Renderer2) { }
+
+                    @ContentChild('childcon') childPara:ElementRef;
+
+                    ngOnInit() {
+        
+                    }
+
+                    ngAfterContentInit(){
+                        console.log(this.msg);
+                        this.rendrer.setStyle(this.childPara.nativeElement, 'backgroundColor', 'red');
+                        this.rendrer.setStyle(this.childPara.nativeElement, 'myClass');
+                    }
+                }
+                
+            </textarea>
+
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+            <!-- ************************************************ -->
+
+            <br/>
+            <br/>
+            <div style="border-top:4px solid #333; height: 1px;"></div>
+            <br/>    
+
+            <h5>How to use multiple ng-content</h5>
+
+            <h6>Prent Component HTML file </h6>
+            <textarea style="width: 100%; height: 100px;" readonly>
+                <app-child>
+                    <h1 class="card-title">Title</h1>
+                    <h6 class="card-desc">Description</h6>
+                </app-child>    
+            </textarea>
+
+            <h6>Child Component HTML file </h6>
+            <textarea style="width: 100%; height: 100px;" readonly>
+                This is child content
+                <ng-content select="card-title"></ng-content> // This will print 'Title'
+                <ng-content select="card-desc"></ng-content>  // This will print 'Description'  
+            </textarea>
+
+
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

@@ -1,0 +1,759 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div w3-include-html="sidebar.html"></div> 
+        </div>
+
+        <div class="col-md-9">
+            <a href="https://www.youtube.com/watch?v=NwgZ4R7HJIw&list=PLLhsXdvz0qjI68a8tLUUMyXmNhl608mcn&index=1" target="_blank">Rxjs Angular</a>
+            <br/>
+            <a href="https://fireship.io/lessons/rxjs-basic-pro-tips/" target="_blank">RxJs Lib</a>
+            <h5>Form Event</h5>
+            <p>FromEvent is a method provided by RxJs to create Observable. let's create from <b>mouse click</b></p>
+            <p>Note:- viewChild will be accesible under ngAfterViewInit</p>
+            <code>
+            <br/>
+            @viewChild('btn') btn:ElementRef;
+            <br/>
+            const click = fromEvent(this.btn.nativeElemet, 'click')
+            <br/>
+            click.subscribe((data)=>{
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+            <button #btn>click</button>
+            </code>
+            <br/>
+            
+
+            <br/>
+            <br/>
+            <h5>Interval</h5>
+            <p>Creates an Observable that emits sequential numbers every specified interval of time, on a specified SchedulerLike.</p>
+            
+            <code>
+                const intObservable = interval(1000);
+                <br/>
+                intObservable.subscribe((data)=>{
+                    <br/>
+                    &nbsp; console.log(data) // it will print 0,1,2 and so on
+                    <br/>
+                })
+            </code>
+            <br/>
+            <br/>
+            <h5>Timer</h5>
+            <p>Creates an observable that will wait for a specified time period</p>
+            <code>
+            // timer(delay, interval)
+            <br/>
+            const tm = timer(5000, 1000);
+            <br/>
+            tm.subscribe((data)=>{
+                <br/>
+                &nbsp;console.log(data); // will wait 5 second then will print number with interval 1sec.
+                <br/>
+            })
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>of</h5>
+            <p>Converts the arguments to an observable sequence.</p>
+            <code>
+                const ofObser = of('prashant','kumar','shrivastava');
+                <br/>
+                ofObser.subscribe((data)=>{
+                    <br/>
+                    console.log(data);<br/>
+                    //prashant
+                    <br/>
+                    //kumar
+                    <br/>
+                    //shrivastava
+                    <br/>
+                })
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>from</h5>
+            <p>Creates an Observable from an Array, an array-like object, a Promise, an iterable object, or an Observable-like object.</p>
+            <code>
+            const array = [10, 20, 30];
+            <br/>
+            const result = from(array);
+            <br/>
+            result.subscribe((data)=>{
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+            output=> 
+            <br/>
+            // 10
+            <br/>
+            // 20
+            <br/>
+            // 30
+            <br/>
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>Pipe</h5>
+            <p>a standalone function and a method on the Observable interface that can be used to combine multiple RxJS operators to compose asynchronous operations. like map, take, toArray</p>
+            <code>
+            return this._employeeService.getEMployee().pipe(
+                <br/>
+                &nbsp;map(res => {
+                    <br/>
+                    &nbsp;&nbsp;console.log(res)
+                    <br/>
+                    &nbsp;})
+                <br/>
+            );
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>tap/do</h5>
+            <p><b>returns an observable that is identical to the source. It does not modify the stream in any way.</b> Tap operator is useful for logging the value, debugging the stream for the correct values, or perform any other side effects.</p>
+            <code>
+            const source = interval(2000); // print value after every 2 second
+            <br/>
+            this.objSubscription = source.pipe(
+                <br/>
+                tap(res=>{
+                    <br/>
+                    &nbsp;if(res==4){ // once res will be 4 code will stop 
+                        <br/>
+                        &nbsp;&nbsp;this.objSubscription.unsubscribe();
+                        <br/>
+                    &nbsp;}
+                    <br/>
+                }),
+                <br/>
+                map(res => {
+                    <br/>
+                    &nbsp;return res;
+                    <br/>
+
+                })
+            )
+            <br/>
+            output => 
+            <br/>
+            0
+            <br/>
+            1
+            <br/>
+            2
+            <br/>
+            3
+            <br/>
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>map</h5>
+            <p>a transformation operator used to transform the items emitted by an Observable by applying a function to each item</p>
+            
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>take</h5>
+            <p>If you use the take(n) operator on an Observable, and that Observable emits nth item </p>
+            <code>
+            const obs = interval(1500);
+            <br/>
+            obs.pipe(
+                <br/>
+                &nbsp;take(5),
+                <br/>
+                &nbsp;map(res => {
+                    <br/>
+                    &nbsp;&nbsp;return res;
+                    <br/>
+                &nbsp;})
+                <br/>
+            ).subscribe(data => {
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+            output => 
+            <br/>
+            0
+            <br/>
+            1
+            <br/>
+            2
+            <br/>
+            3
+            <br/>
+            4
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>toArray</h5>
+            <p>Collects all source emissions and emits them as an array when the source completes.</p>
+            <code>
+            const obs = interval(1500);
+            <br/>
+            obs.pipe(
+                <br/>
+                &nbsp;take(10),
+                <br/>
+                &nbsp;toArray()
+                <br/>
+            ).subscribe((res) => {
+                <br/>
+                &nbsp;console.log(res);
+                <br/>
+            })
+            <br/>
+            // output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>Custom Observable</h5>
+            <code>
+            const obs = Observable.create(observer => {
+                <br/>
+                &nbsp;observer.next('hi');
+                <br/>
+                &nbsp;observer.next('hello');
+                <br/>
+            });
+            <br/>
+            obs.subscribe((data) => {
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+            output => 
+            <br/>
+            hi
+            <br/>
+            hello
+
+            </code>
+            
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>debounceTime</h5>
+            <p>Note:- viewChild will be accesible under ngAfterViewInit</p>
+            <code>
+            @viewChild('txt') txt:ElementRef;
+            <br/>
+            const obj = fromEvent<any>(this.txt.nativeElemet, 'keyup');
+            <br/>
+            obj.pipe(
+                <br/>
+                &nbsp;map(event => {
+                    <br/>
+                    &nbsp;&nbsp;return event.target.value;
+                    <br/>
+                &nbsp;}),
+                <br/>
+                debounceTime(1000),
+                <br/>
+            ).subscribe((data) => {
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+
+            // output => pras
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>throttleTime</h5>
+            <p>Note:- viewChild will be accesible under ngAfterViewInit</p>
+            <code>
+            @viewChild('txt') txt:ElementRef;
+            <br/>
+            const obj = fromEvent<any>(this.txt.nativeElemet, 'keyup');
+            <br/>
+            obj.pipe(
+                <br/>
+                &nbsp;map(event => {
+                    <br/>
+                    &nbsp;&nbsp;return event.target.value;
+                    <br/>
+                &nbsp;}),
+                <br/>
+                throttleTime(1000),
+                <br/>
+            ).subscribe((data) => {
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+
+            // output => pras
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>distinctUntilChanged</h5>
+            <p>if input will be diffrence then only api will call</p>
+            <p>Note:- viewChild will be accesible under ngAfterViewInit</p>
+            <code>
+            @viewChild('txt') txt:ElementRef;
+            <br/>
+            const obj = fromEvent<any>(this.txt.nativeElemet, 'keyup');
+            <br/>
+            obj.pipe(
+                <br/>
+                &nbsp;map(event => {
+                    <br/>
+                    &nbsp;&nbsp;return event.target.value;
+                    <br/>
+                &nbsp;}),
+                <br/>
+                debounceTime(1000),
+                <br/>
+                distinctUntilChanged()
+                <br/>
+            ).subscribe((data) => {
+                <br/>
+                &nbsp;console.log(data);
+                <br/>
+            })
+            <br/>
+
+            // output => pras
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>concat</h5>
+            <p>a join operator that creates an output Observable, which sequentially emits all values from the given Observable and then proceed to the next one.</p>
+            <p>note:- will print the data in <b>sequence</b>. will produce result 1st observable thn 2nd and then last</p>
+            <img src="https://s3-us-west-1.amazonaws.com/angular-university/blog-images/rxjs-map-operators/01-rxjs-concat.png" width="100%">
+            <code>
+                const con1 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con1-' + v;
+                        <br/>
+                    &nbsp;}),
+                    <br/>
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>    
+                const con2 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con2-' + v;
+                        <br/>
+                    &nbsp;}),
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>
+                const con3 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con3-' + v;
+                        <br/>
+                    &nbsp;}),
+                    <br/>
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>
+                const finalObj = concat(con1,con2,con3);
+                <br/>
+                finalObj.subscribe((data) => {
+                    <br/>
+                    &nbsp;console.log(data)
+                    <br/>
+                })
+                <br/>
+                <br/>
+                output => 
+                <br/>
+                con1-0
+                <br/>
+                con1-1
+                <br/>
+                con1-2
+                <br/>
+                con2-0
+                <br/>
+                con2-1
+                <br/>
+                con2-2
+                <br/>
+                con3-0
+                <br/>
+                con3-1
+                <br/>
+                con3-2
+                <br/>
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>merge</h5>
+            <p>a join operator that creates an output Observable, which <b>non sequentially</b> emits all values from the given Observable and then proceed to the next one.</p>
+            <p>note:- will print the data in random order. will produce result 1st observable thn 2nd and then last</p>
+            <img src="https://s3-us-west-1.amazonaws.com/angular-university/blog-images/rxjs-map-operators/04-rxjs-merge.png" width="100%">
+            <code>
+                const con1 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con1-' + v;
+                        <br/>
+                    &nbsp;}),
+                    <br/>
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>    
+                const con2 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con2-' + v;
+                        <br/>
+                    &nbsp;}),
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>
+                const con3 = interval(100).pipe(
+                    <br/>
+                    &nbsp;map(v => {
+                        <br/>
+                        &nbsp;&nbsp;return 'con3-' + v;
+                        <br/>
+                    &nbsp;}),
+                    <br/>
+                    &nbsp;take(3)
+                    <br/>
+                )
+                <br/>
+                <br/>
+                const finalObj = merge(con1,con2,con3);
+                <br/>
+                finalObj.subscribe((data) => {
+                    <br/>
+                    &nbsp;console.log(data)
+                    <br/>
+                })
+                <br/>
+                <br/>
+                output => below output is not correct. it's sampl. data will <b>not print in sequence order</b></a>
+                <br/>
+                con3-0
+                <br/>
+                con3-2
+                <br/>
+                con1-0
+                <br/>
+                con1-1
+                <br/>
+                con1-2
+                <br/>
+                con3-1
+                <br/>
+                con2-0
+                <br/>
+                con2-1
+                <br/>
+                con2-2
+                <br/>
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>Flattening Operator</h5>
+            <p>subscribing to an observable within another subscription.</p>
+            <code>
+            getData(data){
+                <br/>
+                &nbsp;return of(data + 'video');
+                <br/>
+            }
+            <br/>
+            <br/>
+
+            const source = from['tech', 'comedy', 'news'];
+            <br/>
+
+            source.pipe(
+                <br/>
+                &nbsp;map(res => this.getData(res))
+                <br/>
+            ).subscribe((res)=>{ // in res will get Observable because getData returning Observable
+                <br/>
+                &nbsp;res.subscribe((res2)=>{ // Flattening because using another subscription under subscription
+                    <br/>
+                    &nbsp;&nbsp;console.log('res2')
+                    <br/>
+                &nbsp;})
+                <br/>
+            })
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>mergeMap (map+mergeAll)</h5>
+            <p>To avoid Flattening</p>
+            <code>
+            getData(data){
+                <br/>
+                &nbsp;return of(data + 'video');
+                <br/>
+            }
+            <br/>
+            <br/>
+
+            const source = from['tech', 'comedy', 'news'];
+            <br/>
+
+            source.pipe(
+                <br/>
+                &nbsp;mergeMap(res => this.getData(res))
+                <br/>
+            ).subscribe((res)=>{ // will not get observable here because we are using mergeMap
+                <br/>
+                &nbsp;console.log(res);
+               <br/>
+            })
+            <br/>
+            output => may be print data in order or may be not becuase it's merge
+            <br/>
+            tech-video
+            <br/>
+            comedy-video
+            <br/>
+            news-video
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>concatMap (map+concatAll)</h5>
+            <p>To avoid Flattening</p>
+            <code>
+            getData(data){
+                <br/>
+                &nbsp;return of(data + '-video');
+                <br/>
+            }
+            <br/>
+            <br/>
+
+            const source = from['tech', 'comedy', 'news'];
+            <br/>
+
+            source.pipe(
+                <br/>
+                &nbsp;concatMap(res => this.getData(res))
+                <br/>
+            ).subscribe((res)=>{ // will not get observable here because we are using concatMap
+                <br/>
+                &nbsp;console.log(res);
+               <br/>
+            })
+            <br/>
+            output => will print data in order
+            <br/>
+            tech-video
+            <br/>
+            comedy-video
+            <br/>
+            news-video
+            </code>
+
+            <!-- ==================================== -->
+
+            <br/>
+            <br/>
+            <h5>switchMap (map+switchAll)</h5>
+            <p>To avoid Flattening</p>
+            <p>Avoid all previous request and will work on last request. Suppose you search react and sdnly your mind change and you started to search angular and react result didn’t come still in progress. in this case it will fetch angular result. we can say it will get last request </p>
+            <code>
+            getData(data){
+                <br/>
+                &nbsp;return of(data + '-video').pipe(delay(2000));
+                <br/>
+            }
+            <br/>
+            <br/>
+
+            const source = from['tech', 'comedy', 'news'];
+            <br/>
+
+            source.pipe(
+                <br/>
+                &nbsp;switchMap(res => this.getData(res))
+                <br/>
+            ).subscribe((res)=>{ // will not get observable here because we are using switchMap
+                <br/>
+                &nbsp;console.log(res);
+               <br/>
+            })
+            <br/>
+            output => news-video 
+            </code>
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>ExhaustMap</h5>
+            <p>suppose on click on button an api is calling and user hit that button multiple time by mistake. in this case multiple api call will be there. to avoid this thing we will use ExhaustMap</p>
+            <code>
+                @viewChild(btn) btn:elementRef;
+                <br/>
+
+                const obs = fromEvent(this.btn.nativeElemet, 'click');
+                <br/>
+                obs.pipe(
+                    <br/>
+                    &nbsp;exhaustMap((data => {
+                        <br/>
+                        &nbsp;&nbsp;return data;
+                        <br/>
+                    &nbsp;}))
+                    <br/>
+                ).subscribe((res) => {
+                    <br/>
+                    &nbsp;&nbsp;console.log(res);
+                    <br/>
+                })
+
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>combineLatest</h5>
+            <img src="https://images.squarespace-cdn.com/content/v1/5bc3ae2ca56827a279bf229b/1582725863326-9NVTBWK7Y4I0GVFTAJRC/combineLatestDiagram.png" style="width:100%">
+            <code>
+            <br/>
+            @viewChild('name') name:ElementRef;
+            @viewChild('clr') clr:ElementRef;
+            <br/>
+            const nameobs = fromEvent(this.name.nativeElemet, 'change').pipe(map(data=>{
+                <br/>
+                &nbsp;return event;
+                <br/>
+            }));
+            <br/>
+            <br/>
+            const clrobs = fromEvent(this.clr.nativeElemet, 'change').pipe(map(data=>{
+                <br/>
+                &nbsp;return event;
+                <br/>
+            }))
+            <br/>
+            <br/>
+            combineLatest(nameobs, clrobs).subscribe(([name, clr]) => {
+                <br/>
+                &nbsp;console.log(name, clr)
+                <br/>
+            })
+            <br/>
+            <br/>
+            both api response will come thn only sbscribe 
+            output :- shekhar green 
+            </code>    
+
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>Zip</h5>
+            <img src="https://miro.medium.com/max/1400/1*viJ_0w9OH9XHCYUJo8Nj1A.png" style="width:100%">
+
+            <code>
+            const age$ = of(27, 25, 29);
+            <br/>
+            const name$ = of('Foo', 'Bar', 'Beer');
+            <br/>
+            zip(age$, name$).subscribe(([age, name]) => {
+                <br/>
+                &nbsp;console.log(age, name);
+                <br/>
+            })
+            <br/>
+            <br/>
+            output=> both api response will come thn only sbscribe 
+            <br/>
+            27 Foo
+            <br/>
+            25 Bar
+            <br/>
+            29 Beer
+            </code>
+            <!-- ==================================== -->
+            <br/>
+            <br/>
+            <h5>forkJoin</h5>
+            <img src="https://user-images.githubusercontent.com/29947725/59845454-9bd32c80-939c-11e9-818a-fbfab0f735be.png" style="width:100%">
+
+            <code>
+            const age$ = of(27, 25, 29);
+            <br/>
+            const name$ = of('Foo', 'Bar', 'Beer');
+            <br/>
+            forkJoin(age$, name$).subscribe(([age, name]) => {
+                <br/>
+                &nbsp;console.log(age, name);
+                <br/>
+            })
+            <br/>
+            <br/>
+            output=> both api response will come thn only sbscribe 
+            <br/>
+            29 Beer
+            </code>
+        </div>  
+    </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>

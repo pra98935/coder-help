@@ -1,0 +1,236 @@
+<script src="./assets/js/include.js"></script>
+<div w3-include-html="header.html"></div> 
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+        <div w3-include-html="sidebar.html"></div> 
+    </div>
+
+    <div class="col-md-9">
+
+                <h4>
+                    Jasmine/Karma
+                </h4>
+
+                <h5>Jasmine</h5>
+                <ul>
+                    <li>Jasmine is a JavaScript testing framework</li> 
+                    <li>It supports a software development practice called Behaviour-Driven Development, or BDD for short. </li>
+                </ul>
+
+                <h5>Predefined Matchers</h5>
+                <ul>
+                    <li>expect(array).toContain(member);</li>
+                    <li>expect(fn).toThrow(string);</li>
+                    <li>expect(fn).toThrowError(string);</li>
+                    <li>expect(instance).toBe(instance);</li>
+                    <li>expect(mixed).toBeDefined();</li>
+                    <li>expect(mixed).toBeFalsy();</li>
+                    <li>expect(mixed).toBeNull();</li>
+                    <li>expect(mixed).toBeTruthy();</li>
+                    <li>expect(mixed).toBeUndefined();</li>
+                    <li>expect(mixed).toEqual(mixed);</li>
+                    <li>expect(mixed).toMatch(pattern);</li>
+                    <li>expect(number).toBeCloseTo(number, decimalPlaces);</li>
+                    <li>expect(number).toBeGreaterThan(number);</li>
+                    <li>expect(number).toBeLessThan(number);</li>
+                    <li>expect(number).toBeNaN();</li>
+                    <li>expect(spy).toHaveBeenCalled();</li>
+                    <li>expect(spy).toHaveBeenCalledTimes(number);</li>
+                    <li>expect(spy).toHaveBeenCalledWith(...arguments);</li>
+                </ul>
+
+                <h5>Setup</h5>
+                <ul>
+
+                    <li>
+                        <strong>A fixture </strong> is a wrapper for a component and its template.
+                    </li>
+
+                    <li>
+                        <strong>detectChanges()</strong> tells Angular to run change-detection.
+                    </li>
+
+                    <li>
+                        <b>beforeAll</b>
+                        This function is called once, before all the specs in a test suite <strong>(describe function)</strong> are run.
+                    </li>
+
+                    <li>
+                        <b>afterAll</b>
+                        This function is called once after all the specs in a test suite are finished.
+                    </li>
+
+                    <li>
+                        <b>beforeEach</b>
+                        This function is called before each test specification <strong>(it function)</strong> is run.
+                    </li>
+
+                    <li>
+                        <b>afterEach</b>
+                        This function is called after each test specification is run.
+                    </li>
+
+                    <li>
+                        <b>it()</b>
+                        method for initializing a unit test,
+                    </li>
+
+                    <li>
+                        <b>fit()</b> 
+                        If suites or specs are <strong>focused</strong>, only those that are focused will be executed
+                    </li>
+
+                    <li>
+                        <b>xit()</b> 
+                        The spec will report as <strong>pending</strong> and will not be executed.
+                    </li>
+
+                    <li>
+                        <b>describe()</b> 
+                        method for creating a suite of tests,
+                    </li>
+
+                    <li>
+                        <b>fdescribe()</b> 
+                        If suites or specs are <strong>focused</strong>, only those that are focused will be executed
+                    </li>
+
+                    <li>
+                        <b>xdescribe()</b> 
+                        Specs within an xdescribe will be marked <strong>pending</strong> and not executed
+                    </li>
+
+                    <li>
+                        <b>expect()</b> 
+                        method for defining expectations.
+                    </li>
+
+                    <li>
+                        <b>TestBed()</b> 
+                        Create a dynamic Angular testing module
+                    </li>
+
+                    <li>
+                        <b>spy</b> 
+                        <ul>
+                            <li>Spies are a way to check if a function was called or to provide a custom return value. </li>
+                            <li>Jasmine spies are used to track functions or methods. </li>
+                            <li>spyOn() takes two parameters: the first parameter is the name of the object and the second parameter is the name of the method to be spied upon.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <b>Stub</b>
+                        Stub is an object that holds predefined data and uses it to answer calls during tests. ... An example can be an object that needs to grab some data from the database to respond to a method call. Instead of the real object, we introduced a stub and defined what data should be returned.
+                    </li>
+
+                    <li>
+                        <b>HttpClientTestingModule</b>
+                        We import HttpClientTestingModule so that it mocks HttpClientModule as we don’t want to make actual http calls.
+                    </li>
+
+                    <li>
+                        <b>HttpTestingController</b>
+                        HttpTestingController is a service of HttpClientTestingModule that is used to mock the http calls. Along with our service we also inject httpTestingController with TestBed.get(HttpTestingController) and store its instance in a variable called 'httpTestingController'.
+                    </li>
+
+                </ul>
+
+                <h5>Default Code for Testing</h5>
+                <textarea style="width: 100%; height: 500px;" readonly>
+
+                    import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+                    import { EmployeeDataComponent } from './employee-data.component';
+
+                    describe('EmployeeDataComponent', () => {
+                        let component: EmployeeDataComponent;
+                        let fixture: ComponentFixture<EmployeeDataComponent>;
+
+                        beforeEach(async(() => {
+                            TestBed.configureTestingModule({
+                                declarations: [ EmployeeDataComponent ]
+                            })
+                            .compileComponents();
+                        }));
+
+                        beforeEach(() => {
+                            fixture = TestBed.createComponent(EmployeeDataComponent);
+                            component = fixture.componentInstance;
+                            fixture.detectChanges();
+                        });
+
+                        it('should create', () => {
+                            expect(component).toBeTruthy();
+                        });
+                    });
+
+                </textarea>
+
+                <br/>
+                <br/>
+                <h5>How to write test case for subscribe </h5>
+
+                <h6>Code in component</h6>
+                <textarea style="width: 100%; height: 170px;" readonly>
+                    listOfUsers: User[];
+                    
+                    getUsers(): void {
+                        this.userService.getUsers().subscribe(users => {
+                            this.listOfUsers = users;
+                        });
+                    }
+                </textarea>
+
+                <h6>Code in spec file</h6>
+                <textarea style="width: 100%; height: 170px;" readonly>
+                    beforeEach(async(() => {
+                        TestBed.configureTestingModule({
+                            declarations: [ EmployeeDataComponent ],
+                            providers: [
+                                UserService
+                            ],
+                            imports: [HttpModule]
+                        })
+                        .compileComponents();
+                    }));
+
+                    it("should call getUsers and return list of users", async(() => {
+                        const _userService = TestBed.get(UserService);
+                        const response = [];
+                        spyOn(_userService, 'getUsers').and.returnValue(of(response))
+                        component.getUsers();
+                        expect(component.listOfUsers).toEqual(response);
+                    }));
+                </textarea>
+
+                <!-- ************************************************ -->
+                <!-- ************************************************ -->
+                <!-- ************************************************ -->
+
+                <br/>
+                <br/>
+                <div style="border-top:4px solid #333; height: 1px;"></div>
+                <br/>
+
+                <h5>Karma</h5>
+                <ul>
+                    <li>Karma is test case runner</li>
+                </ul>
+
+                <a href="https://jasmine.github.io/api/edge/Spy.html" target="_blank">Jasmine Tutorial</a>
+                <a href="https://www.youtube.com/watch?v=axZ67mDlRHI&t=634s" target="_blank">Check service in test case</a>
+                    
+                
+          
+    </div>  
+
+  </div>
+</div>
+
+<div w3-include-html="footer.html"></div> 
+<script>
+    includeHTML();
+</script>
